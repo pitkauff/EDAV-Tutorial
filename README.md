@@ -115,5 +115,48 @@ ggmap(map_2)
 
 <img src="Images/Graph_3.png" style="display: block; margin: auto;" height="500" width="550" />
 
+Note that you might get some strange error messages if you are not running the most up-to-date version of R. 
+So far we have created some cool maps, but they're not really showing anything that I can't get from going to maps.google.com, so let's actually plot some things. Let's try to find which stations were most used during the Morning, defined as between 8am and 12pm.
 
+```r
+library(dplyr)
+library(lubridate)
+
+# Create time of day categories
+time_of_day <- data %>% as.tbl %>% select(start.station.id, end.station.id, start.station.latitude,
+  start.station.longitude, end.station.latitude, end.station.longitude, starttime) %>% mutate(start_time =
+  {starttime %>% as.character %>% mdy_hms %>% hour}) %>% mutate(time_of_day = cut(start_time, breaks = c(-1, 8,
+  12, 18, 24), labels = c("Early Morning", "Morning", "Afternoon", "Night")))
+
+# Get all rides from the "Morning" category
+time_of_day <- subset(time_of_day, time_of_day == "Morning")
+
+# Obtain 10 busiest routes
+most_pop <- time_of_day %>% mutate(count = 1) %>% group_by(start.station.id, end.station.id,
+  start.station.latitude, start.station.longitude, end.station.latitude, end.station.longitude) %>% tally %>%
+  ungroup %>% arrange(desc(n)) %>% slice(1:10) 
+
+# Create map object
+myRoutes <- get_map(location = c(lon = -73.98767495, lat = 40.74), 
+                 source = "google", 
+                 maptype = "roadmap", 
+                 zoom = 13)
+
+# Plot the stations
+ggmap(myRoutes) + geom_segment(data = most_pop,
+                               aes(x = start.station.longitude, 
+                                   y = start.station.latitude, 
+                                   xend = end.station.longitude, 
+                                   yend = end.station.latitude), 
+                               colour = "black", lwd = 0.7) +
+                  geom_point(data = most_pop, aes(x = start.station.longitude, y = start.station.latitude),
+                             fill = "blue", shape = 21, size = 2) + 
+                  geom_point(data = most_pop, aes(x = end.station.longitude, y = end.station.latitude), 
+                             fill = "blue", shape = 21, size = 2) + 
+                  labs(title = "Most Popular Routes bewteen 8am and 12pm")
+```
+
+<img src="Images/Graph_4.png" style="display: block; margin: auto;" height="500" width="550" />
+
+Here, routes that have the same start and end point are simply shown as a dot. Unfortuntely, this is the best we can do with the given data when it comes to plotting the routes. Since we have no location data for the actual trip, we can only plot the start and end locations. 
 
