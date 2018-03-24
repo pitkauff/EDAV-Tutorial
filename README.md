@@ -190,47 +190,32 @@ Notice how we apply the distGeo() function to add a column with the distance bet
 We can also add labels to the map to make the order of closesness clear to the reader. 
 
 ```r
-
-library(ggmap)
-library(dplyr)
-
-
 #get station list
-
 stations <- data[order(data[,'start.station.id']),]
 stations <- stations[!duplicated(stations$start.station.id),]
 
 # set current address
-
 myLoc <- "lower east side, NY"
 currLoc <- geocode(myLoc)
 
 # Get closest stations
+stations$distFromCurr <- c(0, sapply(2:nrow(stations), function(rownumber) {distGeo(currLoc,  
+			 c(stations$start.station.longitude[rownumber], stations$start.station.latitude[rownumber]))}))
 
-stations$distFromCurr <- c(0,sapply(2:nrow(stations), function(rownumber) {distGeo(currLoc, 
-                                       c(stations$start.station.longitude[rownumber], stations$start.station.latitude[rownumber]))}))
-
-closeStations <- head(arrange(stations,distFromCurr), n=11)[2:11,]
-closeStations$rank <- as.numeric(row.names(closeStations))-1
+closeStations <- head(arrange(stations,distFromCurr), n = 11)[2:11,]
+closeStations$rank <- as.numeric(row.names(closeStations)) - 1
 
 # create map object
-
 map <- get_map(location = currLoc, 
-                 source = "google", 
-                 maptype = "roadmap", 
-                 crop = FALSE,
-                 zoom = 15)
+               source = "google", 
+               maptype = "roadmap", 
+               zoom = 15)
 
 # plot the map and include labels
-
-ggmap(map) + 
-  geom_point(data = closeStations, aes(x=start.station.longitude, y= start.station.latitude), color = "red") +
-  geom_label(data = closeStations, aes(x=start.station.longitude, y= start.station.latitude, label=rank), nudge_x = .001) +
-  geom_point(data=currLoc, aes(x=lon, y=lat),shape=21, size=8, color = "blue", fill="yellow")
-
-
+ggmap(map) + geom_point(data = closeStations, aes(x = start.station.longitude, y = start.station.latitude), color = "red") +
+  	     geom_label(data = closeStations, aes(x = start.station.longitude, y = start.station.latitude, label=rank), nudge_x = .001) +
+  	     geom_point(data = currLoc, aes(x = lon, y = lat), shape = 21, size = 8, color = "blue", fill = "yellow")
 ```
-
 
 <img src="Images/Graph_7.png" style="display: block; margin: auto;" height="500" width="550" />
 
