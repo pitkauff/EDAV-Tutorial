@@ -82,6 +82,6 @@ map <- get_map(location = c(lon = -75.5, lat = 43.2),
 ggmap(map)
 ```
 ! [Alt text] (/Users/michelkauffmann/Desktop/Graph_1.png)
-<img src="michelkauffmann/Desktop/Graph_1.png" style="display: block; margin: auto;" />
+<img src="/Users/michelkauffmann/Desktop/Graph_1.png" style="display: block; margin: auto;" />
 
 
