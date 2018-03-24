@@ -190,9 +190,9 @@ locs <- rbind(e.s.loc, s.s.loc) %>% as.tbl %>% mutate(time =
 locs.w.time <- locs %>% group_by(station, time_of_day, lat, long) %>% tally 
 
 stations <- get_map(location = c(lon = -73.98767495, lat = 40.72603999), 
-                 source = "google", 
-                 maptype = "roadmap", 
-                 zoom = 13)
+                    source = "google", 
+                    maptype = "roadmap", 
+                    zoom = 13)
 
 # Plot the stations
 ggmap(stations) + geom_point(aes(x = long, y = lat, colour = n), data = locs.w.time, size = 1.3) + 
