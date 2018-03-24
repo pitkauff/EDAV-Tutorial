@@ -203,6 +203,18 @@ ggmap(stations) + geom_point(aes(x = long, y = lat, colour = n), data = locs.w.t
 
 <img src="Images/Graph_5.png" style="display: block; margin: auto;" height="500" width="550" />
 
+Finally, if you want to do something a little more involved, let's try to create a timelaps map that shows how the usage of the different stations changes over the course of a day. We can do so by creating a 24 maps that each show the station usage during a specific hour of the day. We then create a APNG file from the saved images and upload it. This will look as follows:
+
+```r
+for (i in 1:24) {
+  tlocs <- filter(locs.w.time, time == levels(locs.w.time$time)[i])
+  ggmap(stations) + geom_point(aes(long, lat, colour = rank(n)), size = 0.8, data = tlocs) + 
+                    scale_color_gradient(low = "white", high = "red") + 
+                    labs(title = paste("Hour:", levels(locs.w.time$time)[i]), cex.names = 0.75)
+  ggsave(filename = paste("start", i, ".png", sep = ""), width = 4, height = 4, dpi = 200)
+}
+```
+
 <img src="Images/Graph_6.png" style="display: block; margin: auto;" height="500" width="550" />
 
 
