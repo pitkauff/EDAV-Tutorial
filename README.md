@@ -34,17 +34,17 @@ library(ggmap)
 city_1 = "Tulsa, OK"
 geocode(city_1)
 ```
-lon             lat
-<dbl>           <dbl>
--95.99278	    36.15398	
+    lon             lat
+    <dbl>           <dbl>
+    -95.99278       36.15398	
 
 ```r
 city_2 = "Munich, Germany"
 geocode(city_2)
 ```
-lon             lat
-<dbl>           <dbl>
-11.58198        48.13513
+    lon             lat
+    <dbl>           <dbl>
+    11.58198        48.13513
 
 The function is relatively flexible. We could have also said "Tulsa, Oklahoma" or "Munich, GE". Besides for city locations, the function can also retun more specific lat/lon pair, down to specific street addresses or known locations, for example:
 
@@ -55,7 +55,7 @@ geocode(location_1)
 ```
     lon             lat
     <dbl>           <dbl>
-    -122.0308	    37.332		
+    -122.0308       37.332		
 
 ```r
 location_2 = "Columbia University"
@@ -63,7 +63,7 @@ geocode(location_2)
 ```
     lon             lat
     <dbl>           <dbl>
-    -73.96257	    40.80754	
+    -73.96257       40.80754	
 
 Pretty neat right!
 
@@ -82,5 +82,38 @@ map <- get_map(location = c(lon = -75.5, lat = 43.2),
 ggmap(map)
 ```
 <img src="Images/Graph_1.png" style="display: block; margin: auto;" height="500" width="550" />
+
+The main arguments for the get_map function are as follows:
+* location: a list of a lat/lon pair. This pair essentially tells ggmap where to center its plot. In our case, we have chosen the coordinates, such that we can see New York State.
+* source: can be either "goole", "osm", "stamen" or "cloudmade". This defines where ggmap is pulling the actual maps from.
+* maptype: this defines the basic style of the displayed map. Maptype and source go together, hence not all combinations of are possible.
+* zoom: this tells ggmap what area around the center to plot. Increase for zooming in, decrease for zooming out. Note that the zoom is pretty sensitive, so decreasing by what seems to be a small number will have a large effect.
+
+By playing with the above 4 features, we can create some basic maps to start with, for example:
+
+```r
+# Zoom out
+map_1 <- get_map(location = c(lon = -75.5, lat = 43.2), 
+                 source = "google", 
+                 maptype = "roadmap", 
+                 crop = FALSE,
+                 zoom = 3)
+ggmap(map_1)
+```
+
+<img src="Images/Graph_2.png" style="display: block; margin: auto;" height="500" width="550" />
+
+```r
+# Use a different source and map type
+map_2 <- get_map(location = c(lon = -75.5, lat = 43.2), 
+                 source = "stamen", 
+                 maptype = "watercolor", 
+                 crop = FALSE,
+                 zoom = 7)
+ggmap(map_2)
+```
+
+<img src="Images/Graph_3.png" style="display: block; margin: auto;" height="500" width="550" />
+
 
 
