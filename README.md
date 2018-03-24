@@ -138,9 +138,9 @@ most_pop <- time_of_day %>% mutate(count = 1) %>% group_by(start.station.id, end
 
 # Create map object
 myRoutes <- get_map(location = c(lon = -73.98767495, lat = 40.74), 
-                 source = "google", 
-                 maptype = "roadmap", 
-                 zoom = 13)
+                    source = "google", 
+                    maptype = "roadmap", 
+                    zoom = 13)
 
 # Plot the stations
 ggmap(myRoutes) + geom_segment(data = most_pop,
@@ -159,4 +159,40 @@ ggmap(myRoutes) + geom_segment(data = most_pop,
 <img src="Images/Graph_4.png" style="display: block; margin: auto;" height="500" width="550" />
 
 Here, routes that have the same start and end point are simply shown as a dot. Unfortuntely, this is the best we can do with the given data when it comes to plotting the routes. Since we have no location data for the actual trip, we can only plot the start and end locations. 
+
+Let's now take a look at which stations are most used (as both start and end stations) during different segments of the day
+
+```r
+# Create a new dataset that contains a row for each start station and each end station
+s.s.loc <- select(data, start.station.id, start.station.latitude, start.station.longitude, starttime,
+  tripduration) %>% mutate(id = as.factor("start")) %>% as.tbl
+e.s.loc <- select(data, end.station.id, end.station.latitude, end.station.longitude, stoptime, tripduration) %>%
+  mutate(id = as.factor("end")) %>% as.tbl
+
+names(s.s.loc) <- c("station", "lat", "long", "time", "tripduration", "pos")
+names(e.s.loc) <- c("station", "lat", "long", "time", "tripduration", "pos")
+
+# Bind all the stations and break them into four time of day segments
+locs <- rbind(e.s.loc, s.s.loc) %>% as.tbl %>% mutate(time =
+  {time %>% as.character %>% mdy_hms %>% hour}) %>% mutate(time_of_day = cut(time, breaks = c(-1, 8,
+  12, 18, 24), labels = c("Early Morning", "Morning", "Afternoon", "Night")))
+
+# Count how often each station is used for each of the time of day categories
+locs.w.time <- locs %>% group_by(station, time_of_day, lat, long) %>% tally 
+
+stations <- get_map(location = c(lon = -73.98767495, lat = 40.72603999), 
+                 source = "google", 
+                 maptype = "roadmap", 
+                 zoom = 13)
+
+# Plot the stations
+ggmap(stations) + geom_point(aes(x = long, y = lat, colour = n), data = locs.w.time, size = 1.3) + 
+                  facet_wrap( ~ time_of_day) + 
+                  scale_color_gradient(low = "#7CFC00", high = "#FF0000") + 
+                  labs(title = "Activity Conditioned on Time of Day")
+```
+
+<img src="Images/Graph_5.png" style="display: block; margin: auto;" height="500" width="550" />
+
+
 
