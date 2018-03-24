@@ -116,6 +116,15 @@ ggmap(map_2)
 <img src="Images/Graph_3.png" style="display: block; margin: auto;" height="500" width="550" />
 
 Note that you might get some strange error messages if you are not running the most up-to-date version of R. 
+Once, we have created a map object, ggmap contains a function that let's us inspect the bounding box used to create the map. For example, for the "map_2" created above, the bounding box (coordinates of lower left and upper right corner) can be obtained as follows:
+
+```r
+attr(map_2, "bb")
+```
+    ll.lat          ll.lon          ur.lat          ur.lon
+    <dbl>           <dbl>           <dbl>           <dbl>
+    38.82259        -81.5625    	47.04018    	-70.3125
+
 So far we have created some cool maps, but they're not really showing anything that I can't get from going to maps.google.com, so let's actually plot some things. Let's try to find which stations were most used during the Morning, defined as between 8am and 12pm.
 
 ```r
@@ -160,7 +169,7 @@ ggmap(myRoutes) + geom_segment(data = most_pop,
 
 Here, routes that have the same start and end point are simply shown as a dot. Unfortuntely, this is the best we can do with the given data when it comes to plotting the routes. Since we have no location data for the actual trip, we can only plot the start and end locations. 
 
-Let's now take a look at which stations are most used (as both start and end stations) during different segments of the day
+Let's now take a look at which stations are most used (as both start and end stations) during different segments of the day. Since ggmap is part of the Grammar of Graphics set of packages, we can easily apply "fact-wrap" as we would for any other ggplot.
 
 ```r
 # Create a new dataset that contains a row for each start station and each end station
@@ -194,5 +203,6 @@ ggmap(stations) + geom_point(aes(x = long, y = lat, colour = n), data = locs.w.t
 
 <img src="Images/Graph_5.png" style="display: block; margin: auto;" height="500" width="550" />
 
+<img src="Images/Graph_6.png" style="display: block; margin: auto;" height="500" width="550" />
 
 
