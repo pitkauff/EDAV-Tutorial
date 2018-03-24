@@ -200,7 +200,8 @@ currLoc <- geocode(myLoc)
 
 # Get closest stations
 stations$distFromCurr <- c(0, sapply(2:nrow(stations), function(rownumber) {distGeo(currLoc,  
-			 c(stations$start.station.longitude[rownumber], stations$start.station.latitude[rownumber]))}))
+			 c(stations$start.station.longitude[rownumber], 
+			 stations$start.station.latitude[rownumber]))}))
 
 closeStations <- head(arrange(stations,distFromCurr), n = 11)[2:11,]
 closeStations$rank <- as.numeric(row.names(closeStations)) - 1
@@ -212,8 +213,10 @@ map <- get_map(location = currLoc,
                zoom = 15)
 
 # plot the map and include labels
-ggmap(map) + geom_point(data = closeStations, aes(x = start.station.longitude, y = start.station.latitude), color = "red") +
-  	     geom_label(data = closeStations, aes(x = start.station.longitude, y = start.station.latitude, label=rank), nudge_x = .001) +
+ggmap(map) + geom_point(data = closeStations, aes(x = start.station.longitude, 
+						  y = start.station.latitude), color = "red") +
+  	     geom_label(data = closeStations, aes(x = start.station.longitude, 
+	     					  y = start.station.latitude, label = rank), nudge_x = .001) +
   	     geom_point(data = currLoc, aes(x = lon, y = lat), shape = 21, size = 8, color = "blue", fill = "yellow")
 ```
 
