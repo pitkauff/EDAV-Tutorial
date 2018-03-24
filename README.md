@@ -217,7 +217,8 @@ ggmap(map) + geom_point(data = closeStations, aes(x = start.station.longitude,
 						  y = start.station.latitude), color = "red") +
   	     geom_label(data = closeStations, aes(x = start.station.longitude, 
 	     					  y = start.station.latitude, label = rank), nudge_x = .001) +
-  	     geom_point(data = currLoc, aes(x = lon, y = lat), shape = 21, size = 8, color = "blue", fill = "yellow")
+  	     geom_point(data = currLoc, aes(x = lon, y = lat), shape = 21, size = 8, color = "blue", 
+	     		fill = "yellow")
 ```
 
 <img src="Images/Graph_7.png" style="display: block; margin: auto;" height="500" width="550" />
