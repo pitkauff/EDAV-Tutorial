@@ -53,17 +53,17 @@ library(ggmap)
 location_1 = "one infinite loop, cupertino"
 geocode(location_1)
 ```
-lon             lat
-<dbl>           <dbl>
--122.0308	    37.332		
+    lon             lat
+    <dbl>           <dbl>
+    -122.0308	    37.332		
 
 ```r
 location_2 = "Columbia University"
 geocode(location_2)
 ```
-lon             lat
-<dbl>           <dbl>
--73.96257	    40.80754	
+    lon             lat
+    <dbl>           <dbl>
+    -73.96257	    40.80754	
 
 Pretty neat right!
 
