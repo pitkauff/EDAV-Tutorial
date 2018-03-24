@@ -81,6 +81,6 @@ map <- get_map(location = c(lon = -75.5, lat = 43.2),
                  zoom = 7)
 ggmap(map)
 ```
-<img src="Images/Graph_1.png" style="display: block; margin: auto;" />
+<img src="Images/Graph_1.png" style="display: block; margin: auto;" height="500" width="550" />
 
 
