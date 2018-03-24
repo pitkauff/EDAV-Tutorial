@@ -9,7 +9,6 @@ The main focus here will be on location data encoded as latitude, longitude. For
 ``` r
 data = read.csv("201505-citibike-tripdata.csv")
 str(data)
-head(data)
 ```
     'data.frame':	961986 obs. of  15 variables:
      $ tripduration           : int  415 1523 642 367 2734 359 236 1991 101 1070 ...
@@ -66,9 +65,22 @@ lon             lat
 <dbl>           <dbl>
 -73.96257	    40.80754	
 
+Pretty neat right!
 
+Now, that we know what cool things we can do to prepare our dataset, we can now move on to make some maps.
 
+### Part 2: Working with ggmap
 
+ggmap is part of the Grammar of Graphics library package, so you get all the perks of gg and can easily combine ggmap with other ggplot graphs, as we will see shortly. The basic structure of how ggmap works is not particularly intuitive, so we'll quickly go over the setup before we get to the good stuff. Before actually being able to use the ggmap() function, we need to create a map object that tells ggmap what to plot. This is done as follows:
 
+```r
+map <- get_map(location = c(lon = -75.5, lat = 43.2), 
+                 source = "google", 
+                 maptype = "roadmap", 
+                 crop = FALSE,
+                 zoom = 7)
+ggmap(map)
+```
+<img src="michelkauffmann/Desktop/Graph_1.png" style="display: block; margin: auto;" />
 
 
