@@ -67,6 +67,19 @@ geocode(location_2)
 
 Pretty neat right!
 
+Along with ggmap,another package, geoSphere, is extemely useful when manipulation geographic data. Most commonly, calculating distance between two GPS points.
+
+We can use distGeo() to get the distance in meters between two pairs of GPS coordinates.
+```r
+library(geosphere)
+a <- c(-73.50,42.11)
+b <- c(-73.47,42.12)
+
+distGeo(a,b)
+```
+
+	[1] 2718.336
+
 Now, that we know what cool things we can do to prepare our dataset, we can now move on to make some maps.
 
 ### Part 2: Working with ggmap
@@ -168,6 +181,58 @@ ggmap(myRoutes) + geom_segment(data = most_pop,
 <img src="Images/Graph_4.png" style="display: block; margin: auto;" height="500" width="550" />
 
 Here, routes that have the same start and end point are simply shown as a dot. Unfortuntely, this is the best we can do with the given data when it comes to plotting the routes. Since we have no location data for the actual trip, we can only plot the start and end locations. 
+
+
+Now, lets find the 10 closest CitiBike Stations to a particular location (var: myLoc). For the purpose of this tutorial, we will get the unique station list from the original trips data using the "start.station.id" feature. Remember this is from 2015, so many new stations are not included. In practice, we probably want to get the most updated list of stations. 
+
+Notice how we apply the distGeo() function to add a column with the distance between the selected location, and each stations. 
+
+We can also add labels to the map to make the order of closesness clear to the reader. 
+
+```r
+
+library(ggmap)
+library(dplyr)
+
+
+#get station list
+
+stations <- data[order(data[,'start.station.id']),]
+stations <- stations[!duplicated(stations$start.station.id),]
+
+# set current address
+
+myLoc <- "lower east side, NY"
+currLoc <- geocode(myLoc)
+
+# Get closest stations
+
+stations$distFromCurr <- c(0,sapply(2:nrow(stations), function(rownumber) {distGeo(currLoc, 
+                                       c(stations$start.station.longitude[rownumber], stations$start.station.latitude[rownumber]))}))
+
+closeStations <- head(arrange(stations,distFromCurr), n=11)[2:11,]
+closeStations$rank <- as.numeric(row.names(closeStations))-1
+
+# create map object
+
+map <- get_map(location = currLoc, 
+                 source = "google", 
+                 maptype = "roadmap", 
+                 crop = FALSE,
+                 zoom = 15)
+
+# plot the map and include labels
+
+ggmap(map) + 
+  geom_point(data = closeStations, aes(x=start.station.longitude, y= start.station.latitude), color = "red") +
+  geom_label(data = closeStations, aes(x=start.station.longitude, y= start.station.latitude, label=rank), nudge_x = .001) +
+  geom_point(data=currLoc, aes(x=lon, y=lat),shape=21, size=8, color = "blue", fill="yellow")
+
+
+```
+
+
+<img src="Images/Graph_7.png" style="display: block; margin: auto;" height="500" width="550" />
 
 Let's now take a look at which stations are most used (as both start and end stations) during different segments of the day. Since ggmap is part of the Grammar of Graphics set of packages, we can easily apply "fact-wrap" as we would for any other ggplot.
 
