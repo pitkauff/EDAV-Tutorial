@@ -49,7 +49,6 @@ geocode(city_2)
 The function is relatively flexible. We could have also said "Tulsa, Oklahoma" or "Munich, GE". Besides for city locations, the function can also retun more specific lat/lon pair, down to specific street addresses or known locations, for example:
 
 ```r
-library(ggmap)
 location_1 = "one infinite loop, cupertino"
 geocode(location_1)
 ```
