@@ -4,7 +4,7 @@ Working with geographical data can be both a blessing and a curse, so please enj
 
 ### Part 1: Working with Geographical Data
 
-The main focus here will be on location data encoded as latitude, longitude. For the purpose of this tutorial, we will be working with the NYC citibike data, found [here](https://s3.amazonaws.com/tripdata/index.html). The data set for May 2015 looks as follows:
+The main focus here will be on location data encoded as latitude, longitude. For the purpose of this tutorial, we will be working with the NYC citibike data, found [here](https://s3.amazonaws.com/tripdata/index.html). Speficially, we are using the data for May 2015, which looks as follows:
 
 ``` r
 data = read.csv("201505-citibike-tripdata.csv")
@@ -67,20 +67,20 @@ geocode(location_2)
 
 Pretty neat right!
 
-Along with ggmap,another package, geoSphere, is extemely useful when manipulation geographic data. Most commonly, calculating distance between two GPS points.
+Along with ggmap, another package, geoSphere, is extemely useful when manipulation geographic data. Most commonly, calculating distance between two GPS points.
 
 We can use distGeo() to get the distance in meters between two pairs of GPS coordinates.
+
 ```r
 library(geosphere)
-a <- c(-73.50,42.11)
-b <- c(-73.47,42.12)
+a <- c(-73.50, 42.11)
+b <- c(-73.47, 42.12)
 
 distGeo(a,b)
 ```
-
 	[1] 2718.336
 
-Now, that we know what cool things we can do to prepare our dataset, we can now move on to make some maps.
+Now, that we know what cool things we can do to prepare our dataset, we can move on to make some maps.
 
 ### Part 2: Working with ggmap
 
