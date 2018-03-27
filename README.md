@@ -257,7 +257,7 @@ ggmap(stations) + geom_point(aes(x = long, y = lat, colour = n), data = locs.w.t
 
 <img src="Images/Graph_5.png" style="display: block; margin: auto;" height="500" width="550" />
 
-Finally, if you want to do something a little more involved, let's try to create a timelapse map that shows how the usage of the different stations changes over the course of a day. We can do so by creating 24 maps that each show the station usage during a specific hour of the day. We then create an APNG file from the saved images and upload it. Using the "station" map object we created above, this will look as follows:
+Finally, if you want to do something a little more involved, let's try to create a timelapse map that shows how the usage of the different stations changes over the course of a day. We can do so by creating 24 maps that each show the station usage during a specific hour of the day. We then create an APNG file from the saved images at a website like [this](https://ezgif.com/apng-maker) and upload it. Using the "station" map object we created above, this will look as follows:
 
 ```r
 for (i in 1:24) {
