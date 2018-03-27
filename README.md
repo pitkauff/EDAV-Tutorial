@@ -269,6 +269,6 @@ for (i in 1:24) {
 }
 ```
 
-<img src="Images/Graph_6.png" style="display: block; margin: auto;" height="500" width="550" />
+<img src="Images/Graph_6.1.png" style="display: block; margin: auto;" height="500" width="550" />
 
 
