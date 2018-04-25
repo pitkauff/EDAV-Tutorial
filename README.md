@@ -28,18 +28,6 @@ str(data)
      $ birth.year             : int  1981 NA 1990 1978 1956 1961 1971 1993 1958 1965 ...
      $ gender                 : int  1 0 1 1 2 1 1 1 1 1 ...
 
-	## Location 		Number    Gini 	       Weighted Gini
-	## Toronto, ON   	4903 	  0.9225066    0.12645167
-	## Las Vegas, NV   	4020 	  0.8753205    0.09837537
-	## Phoenix, AZ   	2454 	  0.8401270    0.05763850
-	## Montréal, QC   	1681 	  0.9039136    0.04248032
-	## Charlotte, NC   	1615 	  0.8607311    0.03886272
-	## Pittsburgh, PA   	1449 	  0.8556579    0.03466265
-	## Mississauga, ON   	1001 	  0.9186229    0.02570778
-	## Scottsdale, AZ   	1056 	  0.8302322    0.02451075
-	## Cleveland, OH    	827 	  0.8412700    0.01945065
-	## Madison, WI    	693 	  0.8692630    0.01684138
-
 The columns we will be focusing on are the start and end station latitudes and longitudes. Luckily in our case, we have all the location data, yet sometimes we may only be given partial information. Thankfully, ggmap has a built-in function that can very easily provide coordinates for certain locations. For example, if we wish to find the coordinates of Tulsa, OK and Munich, Germany, we would do the following:
 
 ```r
