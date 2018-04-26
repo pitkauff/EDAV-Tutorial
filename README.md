@@ -28,6 +28,16 @@ str(data)
      $ birth.year             : int  1981 NA 1990 1978 1956 1961 1971 1993 1958 1965 ...
      $ gender                 : int  1 0 1 1 2 1 1 1 1 1 ...
 
+### Inclusing NA's
+
+	## Skim summary statistics
+	## 
+	## Variable type: integer 
+	## variable                                missing  complete   n      mean     sd
+	## cuisines_toronto_check_ins$n_checkins   498      3792       4290   155.11   339.98
+	##  p0  p25  p50  p75  p100   hist
+	##  1   14   50   159  5755   ▇▁▁▁▁▁▁▁
+
 The columns we will be focusing on are the start and end station latitudes and longitudes. Luckily in our case, we have all the location data, yet sometimes we may only be given partial information. Thankfully, ggmap has a built-in function that can very easily provide coordinates for certain locations. For example, if we wish to find the coordinates of Tulsa, OK and Munich, Germany, we would do the following:
 
 ```r
