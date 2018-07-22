@@ -1,5 +1,5 @@
 # Working with Location Data & ggmap
-Authors: Pit Kauffman, Ramy Jaber
+Authors: Pit Kauffmann, Ramy Jaber
 
 Working with geographical data can be both a blessing and a curse, so please enjoy the following tutorial on how to deal with location data and how to use ggmap to make some nice graphs. 
 
