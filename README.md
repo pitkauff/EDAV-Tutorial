@@ -80,7 +80,7 @@ distGeo(a,b)
 ```
 	[1] 2718.336
 
-Now, that we know what cool things we can do to prepare our dataset, we can move on to make some maps.
+Now that we know what cool things we can do to prepare our dataset, we can move on to make some maps.
 
 ### Part 2: Working with ggmap
 
