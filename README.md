@@ -97,7 +97,7 @@ ggmap(map)
 <img src="Images/Graph_1.png" style="display: block; margin: auto;" height="500" width="550" />
 
 The main arguments for the get_map function are as follows:
-* location: a list of a lat/lon pair. This pair essentially tells ggmap where to center its plot. In our case, we have chosen the coordinates, such that we can see New York State.
+* location: a lat/lon pair in list form. This pair essentially tells ggmap where to center its plot. In our case, we have chosen the coordinates, such that we can see New York State.
 * source: can be either "goole", "osm", "stamen" or "cloudmade". This defines where ggmap is pulling the actual maps from.
 * maptype: this defines the basic style of the displayed map. Maptype and source go together, hence not all combinations are possible.
 * zoom: this tells ggmap what area around the center to plot. Increase for zooming in, decrease for zooming out. Note that the zoom is pretty sensitive, so decreasing by what seems to be a small number will have a large effect.
